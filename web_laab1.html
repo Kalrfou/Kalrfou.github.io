@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lab: Build and Publish Your First Portfolio Website</title>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      background: #f7f8fa;
+      color: #333;
+      line-height: 1.6;
+    }
+    header {
+      background: #2d3436;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    h1, h2 {
+      color: #2d3436;
+    }
+    h1 {
+      margin-bottom: 10px;
+    }
+    h2 {
+      margin-top: 30px;
+      border-bottom: 2px solid #ffcc00;
+      padding-bottom: 5px;
+    }
+    ul, ol {
+      margin-left: 20px;
+    }
+    code {
+      background: #f0f0f0;
+      padding: 2px 5px;
+      border-radius: 4px;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #2d3436;
+      color: #fff;
+      margin-top: 40px;
+    }
+    @media (max-width: 600px) {
+      main {
+        margin: 15px;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Lab: Build and Publish Your First Portfolio Website</h1>
+    <p>Web Application Development (II) Lab 1</p>
+  </header>
+
+  <main>
+    <h2>🎯 Objectives</h2>
+    <ul>
+      <li>Install and configure <strong>Git</strong> on your computer.</li>
+      <li>Create and manage a <strong>GitHub repository</strong>.</li>
+      <li>Develop a simple <strong>responsive HTML portfolio website</strong>.</li>
+      <li>Push your project to GitHub and publish it online.</li>
+    </ul>
+
+    <h2>🧩 Part 1: Install and Configure Git</h2>
+    <ol>
+      <li>Download and install Git: <a href="https://git-scm.com/downloads" target="_blank">https://git-scm.com/downloads</a></li>
+      <li>After installation, open <strong>Command Prompt (Windows)</strong> or <strong>Terminal (Mac/Linux)</strong>.</li>
+      <li>Configure your Git username and email:
+        <pre><code>git config --global user.name "Your Name"
+git config --global user.email "your.email@example.com"</code></pre>
+      </li>
+      <li>Verify installation:
+        <pre><code>git --version</code></pre>
+      </li>
+    </ol>
+
+    <h2>🌐 Part 2: Create a GitHub Repository</h2>
+    <ol>
+      <li>Go to <a href="https://github.com" target="_blank">https://github.com</a> and sign in.</li>
+      <li>Click <strong>New Repository</strong>.</li>
+      <li>Name it <strong>portfolio-lab</strong> (or similar).</li>
+      <li>Select:
+        <ul>
+          <li>Public repository ✅</li>
+          <li>Add a README file ✅</li>
+        </ul>
+      </li>
+      <li>Click <strong>Create Repository</strong>.</li>
+    </ol>
+
+    <h2>🖥️ Part 3: Clone Repository to Your Local Machine</h2>
+    <ol>
+      <li>Copy the repository URL from GitHub (e.g., <code>https://github.com/username/portfolio-lab.git</code>).</li>
+      <li>In your terminal, navigate to your working folder:
+        <pre><code>cd Documents</code></pre>
+      </li>
+      <li>Clone your repo:
+        <pre><code>git clone https://github.com/username/portfolio-lab.git</code></pre>
+      </li>
+      <li>Move into the cloned folder:
+        <pre><code>cd portfolio-lab</code></pre>
+      </li>
+    </ol>
+
+    <h2>🧠 Part 4: Create a Simple HTML Portfolio Page</h2>
+    <ol>
+      <li>Inside your project folder, create a new file named <code>index.html</code>.</li>
+      <li>Open it in VS Code or any editor.</li>
+      <li>Add basic HTML structure (header, about, projects, and contact sections).</li>
+      <li>Make sure your layout is responsive for desktop and mobile.</li>
+    </ol>
+
+    <h2>🚀 Part 5: Push Your Website to GitHub</h2>
+    <ol>
+      <li>In your terminal:
+        <pre><code>git add .
+git commit -m "Initial portfolio website"
+git push origin main</code></pre>
+      </li>
+      <li>Go to your GitHub repository — you should now see the <code>index.html</code> file.</li>
+    </ol>
+
+    <h2>📤 Submission Instructions</h2>
+    <ul>
+      <li>Submit your <strong>GitHub repository link</strong> and <strong>live website URL</strong> in Blackboard/Moodle.</li>
+      <li>Ensure your <code>index.html</code> file displays correctly in a web browser.</li>
+    </ul>
+  </main>
+
+  <footer>
+    <p>© 2025 Dr. Khaled Alrfou | Web Application Development (II) Lab 1</p>
+  </footer>
+</body>
+</html>
