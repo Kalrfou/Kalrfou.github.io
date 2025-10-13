@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Computer Vision — CPSC 0602371 (16-week)</title>
+  <style>
+    :root{--accent:#0b69ff;--muted:#666;--card:#ffffff;--bg:#f6f8fb}
+    body{font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;margin:0;background:var(--bg);color:#111}
+    .container{max-width:1100px;margin:28px auto;padding:24px}
+    header{display:flex;align-items:center;gap:18px}
+    .badge{background:var(--accent);color:#fff;padding:8px 12px;border-radius:8px;font-weight:600}
+    h1{margin:0;font-size:1.6rem}
+    p.lead{color:var(--muted);margin:6px 0 18px}
+    .grid{display:grid;grid-template-columns:1fr 320px;gap:20px}
+    .card{background:var(--card);border-radius:12px;padding:18px;box-shadow:0 6px 18px rgba(12,20,40,0.06)}
+    ul.clean{padding-left:18px}
+    table{width:100%;border-collapse:collapse;margin-top:8px}
+    th,td{padding:8px 10px;text-align:left;border-bottom:1px solid #eee}
+    th{background:#fbfdff}
+    .weeks-list{list-style:none;padding:0;margin:0}
+    .week-item{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px dashed #eef}
+    .links a{display:inline-block;margin-left:8px;text-decoration:none;padding:6px 8px;border-radius:8px;border:1px solid #e6eefc;font-size:0.9rem}
+    footer{margin-top:20px;color:var(--muted);font-size:0.9rem}
+    @media (max-width:900px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="badge">CPSC 0602371</div>
+      <div>
+        <h1>Computer Vision — 16-Week Course</h1>
+        <p class="lead">Instructor: Dr. Khaled Alrfou &nbsp;|&nbsp; Office hours: Wed 11:00 AM – 1:00 PM</p>
+      </div>
+    </header>
+
+    <div class="grid" style="margin-top:18px">
+      <main class="card">
+        <h2>Course Description</h2>
+        <p>
+          This course introduces students to the fundamental concepts of computer vision providing an overview of the current methodologies and techniques. Students will explore the theory behind fundamental processing tasks, including segmentation, feature extraction, image classification, and object detection, using a mathematical framework to analyze images as two-dimensional signals. By the end of this course, students will be able to apply the basic principles and tools used in computer vision to solve practical problems in scientific and commercial settings.
+        </p>
+
+        <h3>Course Objectives</h3>
+        <ul class="clean">
+          <li>Explain how light and shading affect the process of image formation.</li>
+          <li>Describe human color perception and its computational representation.</li>
+          <li>Apply linear filters and perform image convolution operations.</li>
+          <li>Implement edge detection algorithms to extract object boundaries.</li>
+          <li>Explain the geometry of binocular cameras and apply concepts of 3D reconstruction.</li>
+          <li>Compare and evaluate motion detection techniques and their real-world applications.</li>
+          <li>Apply a range of image segmentation methods to partition images effectively.</li>
+          <li>Select and implement image registration techniques for aligning multiple images.</li>
+          <li>Identify key challenges in applying transformations for object recognition.</li>
+          <li>Analyze the advantages and disadvantages of various classification methods.</li>
+          <li>Develop and implement image enhancement solutions that integrate multiple computer vision techniques.</li>
+        </ul>
+
+        <h3>Textbooks</h3>
+        <ol>
+          <li>Horn, B. K. P. — <em>Robot Vision</em> (MIT Press)</li>
+          <li>Gonzalez, R. C. &amp; Woods, R. E. — <em>Digital Image Processing</em> (Pearson)</li>
+        </ol>
+
+        <h3>Assessment &amp; Grading</h3>
+        <table>
+          <tr><th>Component</th><th>Weight</th></tr>
+          <tr><td>Project &amp; Quizzes</td><td>20%</td></tr>
+          <tr><td>Midterm Exam</td><td>30% (TBD)</td></tr>
+          <tr><td>Final Exam</td><td>50% (TBD)</td></tr>
+        </table>
+
+        <h3>16-Week Schedule (Topics &amp; Slide Links)</h3>
+        <p>Below are the planned topics by week. Slide links are placeholders — replace href targets with your real slide file URLs (PDFs or PPTX) when they are ready.</p>
+
+        <ol class="weeks-list">
+          <li class="week-item"><strong>Week 1 — Introduction to the course</strong>
+            <span class="links"><a href="web2slides/1-Lect1-Computer Vision.pdf" target="_blank">Slides</a></span></li>
+            <!--
+
+          <li class="week-item"><strong>Week 2 — Human vision and color perception</strong>
+            <span class="links"><a href="slides/week2-color-perception.pdf" target="_blank">Slides</a></span></li>
+
+          <li class="week-item"><strong>Week 3 — Image formation & optics (light, shading)</strong>
+            <span class="links"><a href="slides/week3-image-formation.pdf" target="_blank">Slides</a></span></li>
+
+          <li class="week-item"><strong>Week 4 — Linear filters & convolution</strong>
+            <span class="links"><a href="slides/week4-linear-filters.pdf" target="_blank">Slides</a></span></li>
+
+          <li class="week-item"><strong>Week 5 — Edge detection & local image features</strong>
+            <span class="links"><a href="slides/week5-edges-features.pdf" target="_blank">Slides</a></span></li>
+
+          <li class="week-item"><strong>Week 6 — Feature descriptors & matching (SIFT, SURF, ORB)</strong>
+            <span class="links"><a href="slides/week6-descriptors.pdf" target="_blank">Slides</a></span></li>
+
+          <li class="week-item"><strong>Week 7 — Binocular geometry & stereo vision</strong>
+            <span class="links"><a href="slides/week7-stereo.pdf" target="_blank">Slides</a></span></li>
+
+          <li class="week-item"><strong>Week 8 — Motion perception & optical flow</strong>
+            <span class="links"><a href="slides/week8-motion.pdf" target="_blank">Slides</a></span></li>
+
+          <li class="week-item"><strong>Week 9 — Image segmentation (thresholding, clustering, graph cuts)</strong>
+            <span class="links"><a href="slides/week9-segmentation.pdf" target="_blank">Slides</a></span></li>
+
+          <li class="week-item"><strong>Week 10 — Object recognition basics</strong>
+            <span class="links"><a href="slides/week10-recognition.pdf" target="_blank">Slides</a></span></li>
+
+          <li class="week-item"><strong>Week 11 — Image registration</strong>
+            <span class="links"><a href="slides/week11-registration.pdf" target="_blank">Slides</a></span></li>
+
+          <li class="week-item"><strong>Week 12 — Image classification (classical methods)</strong>
+            <span class="links"><a href="slides/week12-classification.pdf" target="_blank">Slides</a></span></li>
+
+          <li class="week-item"><strong>Week 13 — Modern deep learning approaches (CNNs)</strong>
+            <span class="links"><a href="slides/week13-cnn.pdf" target="_blank">Slides</a></span></li>
+
+          <li class="week-item"><strong>Week 14 — Object detection & segmentation (RCNN, YOLO, Mask R-CNN)</strong>
+            <span class="links"><a href="slides/week14-detection.pdf" target="_blank">Slides</a></span></li>
+
+          <li class="week-item"><strong>Week 15 — Advanced topics: 3D reconstruction, SLAM, and sensors</strong>
+            <span class="links"><a href="slides/week15-advanced.pdf" target="_blank">Slides</a></span></li>
+
+          <li class="week-item"><strong>Week 16 — Project presentations, review & final exam preparation</strong>
+            <span class="links"><a href="slides/week16-presentations.pdf" target="_blank">Slides</a></span></li>
+            -->
+        </ol>
+        <!--
+
+        <h3>Project</h3>
+        <p>Group or individual projects are expected. Project proposals are due by <strong>Week 6</strong>. Final project demos and reports are due in <strong>Week 16</strong>. More details and rubric will be posted on the course site.</p>
+-->
+        <footer>
+          <p>Last updated: Oct 13, 2025 &nbsp;|&nbsp; Contact: <a href="mailto:khaled@stu.ttu.edu.jo">khaled@stu.ttu.edu.jo</a></p>
+        </footer>
+      </main>
+
+      <aside class="card">
+        <h3>Quick info</h3>
+        <p><strong>Course No:</strong> 0602371<br>
+           <strong>Credits:</strong> 3<br>
+           <strong>Lecture:</strong> 3 hrs/week<br>
+
+        <h4>Deliverables & Deadlines</h4>
+        <ul class="clean">
+          <!--<li>Project proposal — Week 6</li>-->
+          <li>Midterm — Week 8 or 9 (TBD)</li>
+         <!-- <li>Final project/demo — Week 16</li>-->
+        </ul>
+
+        <h4>Useful Resources</h4>
+        <ul class="clean">
+          <li><a href="#">OpenCV documentation</a></li>
+          <li><a href="#">scikit-image tutorials</a></li>
+          <li><a href="#">Deep learning & computer vision course notes</a></li>
+        </ul>
+
+        <h4>Contact</h4>
+        <p>Dr. Khaled Alrfou<br>
+        Email: <a href="mailto:khaled@example.edu">khaled@stu.ttu.edu.jo</a><br>
+        Office hours: Wed 11:00 AM – 1:00 PM</p>
+      </aside>
+    </div>
+  </div>
+</body>
+</html>
