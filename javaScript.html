@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Function Closure & Hoisting — Tutorial</title>
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --accent:#7dd3fc; --muted:#94a3b8; --panel:#071029;
+      --success:#10b981; --danger:#f97316;
+      font-family: Inter, ui-sans-serif, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color-scheme: dark;
+    }
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#071024 0%, #08102a 100%); color:#e6eef6}
+    .wrap{max-width:1000px;margin:28px auto;padding:20px}
+    header{display:flex;gap:16px;align-items:center}
+    h1{font-size:1.6rem;margin:0}
+    .subtitle{color:var(--muted);font-size:0.95rem}
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:18px;margin-top:18px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:18px;border-radius:12px;box-shadow:0 6px 20px rgba(2,6,23,0.6)}
+    pre{background:rgba(0,0,0,0.25);padding:12px;border-radius:8px;overflow:auto;color:#dff3ff;font-size:0.9rem}
+    code{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace; font-size:0.9rem}
+    .small{font-size:0.9rem;color:var(--muted)}
+    button, .btn{background:transparent;border:1px solid rgba(125,211,252,0.14); color:var(--accent); padding:8px 10px;border-radius:8px;cursor:pointer}
+    .btn:active{transform:translateY(1px)}
+    .controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .output{background:#021226;padding:12px;border-radius:8px;min-height:56px;color:#d6f6ff;white-space:pre-wrap}
+    .note{background:linear-gradient(90deg, rgba(125,211,252,0.06), rgba(255,255,255,0.02)); border-left:4px solid rgba(125,211,252,0.14); padding:10px;border-radius:6px;color:var(--muted)}
+    .list{margin:0;padding-left:18px}
+    .speaker{margin-top:12px;padding:12px;background:rgba(255,255,255,0.02);border-radius:8px;color:var(--muted);display:none}
+    .show{display:block}
+    .kbd{background:#071827;padding:4px 8px;border-radius:6px;font-size:0.85rem;border:1px solid rgba(255,255,255,0.03)}
+    footer{color:var(--muted);font-size:0.85rem;margin-top:14px;text-align:center}
+    .copy{float:right;font-size:0.8rem;opacity:0.85}
+    @media (max-width:980px){
+      .grid{grid-template-columns:1fr; }
+      .speaker{font-size:0.9rem}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Function Closure & Function Hoisting</h1>
+        <div class="subtitle">Interactive tutorial — examples, notes, and runnable demos</div>
+      </div>
+      <div style="margin-left:auto;text-align:right">
+        <div class="small">Author: Dr. Khaled Alrfou</div>
+        <div class="small">Topic: JavaScript fundamentals</div>
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- Left column: main content -->
+      <main class="card" id="main">
+        <section>
+          <h2 style="margin-top:0">1 — Function Closures</h2>
+          <p class="small">A <strong>closure</strong> is a function that remembers variables from its outer (enclosing) scope even after that outer function has finished executing. Closures are used for data encapsulation, private state, and creating persistent state between calls.</p>
+
+          <div style="display:flex;gap:12px;align-items:center;margin-top:10px">
+            <div class="kbd">Key uses</div>
+            <div class="small">private variables · data hiding · counters & state · event handlers</div>
+          </div>
+
+          <h3 style="margin-top:14px">Simple closure example</h3>
+          <div style="position:relative">
+            <button class="copy" onclick="copyCode('code1')">Copy</button>
+            <pre id="code1"><code>// outer returns an inner function that uses outerVar
+function outer() {
+  let outerVar = "I'm outside!";
+  function inner() {
+    return outerVar;
+  }
+  return inner;
+}
+
+const f = outer();
+console.log(f()); // "I'm outside!"</code></pre>
+          </div>
+
+          <div class="controls">
+            <button class="btn" onclick="runClosure()">Run Closure Example</button>
+            <button class="btn" onclick="runGreetingClosures()">Run Greeting Closures</button>
+            <button class="btn" onclick="toggleSpeaker('s1')">Toggle Speaker Notes</button>
+          </div>
+
+          <div style="margin-top:10px">
+            <div class="note"><strong>Note:</strong> Each time `outer()` is called it creates a fresh closed-over environment. The returned inner function retains access to that environment.</div>
+          </div>
+
+          <div style="margin-top:12px">
+            <div class="small">Output:</div>
+            <div id="outClosure" class="output">— run the example to see results —</div>
+          </div>
+
+          <div id="s1" class="speaker">
+            <strong>Speaker notes — Closure example</strong>
+            <p>Explain that closures "remember" the lexical environment where they were created. Use the greeting example to show how each closure keeps its own name value.</p>
+          </div>
+
+          <hr style="border:none;border-top:1px solid rgba(255,255,255,0.04);margin:18px 0">
+
+          <h3>Practical closure: counter factory</h3>
+          <pre id="code2"><code>// counter uses closure to keep count private
+function makeCounter() {
+  let count = 0;
+  return {
+    inc: function() { count += 1; return count; },
+    dec: function() { count -= 1; return count; },
+    value: function() { return count; }
+  };
+}
+
+const c = makeCounter();
+console.log(c.inc()); // 1
+console.log(c.inc()); // 2
+console.log(c.value()); // 2</code></pre>
+
+          <div class="controls" style="margin-top:8px">
+            <button class="btn" onclick="runCounter()">Run Counter</button>
+            <button class="btn" onclick="toggleSpeaker('sCounter')">Toggle Speaker Notes</button>
+            <button class="copy" style="margin-left:auto" onclick="copyCode('code2')">Copy</button>
+          </div>
+
+          <div style="margin-top:10px">
+            <div class="small">Output:</div>
+            <div id="outCounter" class="output">— run the example to see results —</div>
+          </div>
+
+          <div id="sCounter" class="speaker">
+            <strong>Speaker notes — Counter</strong>
+            <p>Show how `count` is not directly accessible from outside; it is private. The returned object exposes methods that close over `count` so its state persists across calls.</p>
+          </div>
+
+        </section>
+
+        <section style="margin-top:20px">
+          <h2>2 — Function Hoisting</h2>
+          <p class="small">Hoisting is JavaScript's behavior of moving function <em>declarations</em> (and variable declarations) to the top of their containing scope during the compilation phase. This lets you call declared functions before their appearance in source code. <strong>Function expressions</strong> (functions assigned to variables) are not hoisted in the same way.</p>
+
+          <h3 style="margin-top:12px">Hoisting: declaration vs expression</h3>
+          <div style="position:relative">
+            <button class="copy" onclick="copyCode('code3')">Copy</button>
+            <pre id="code3"><code>// Function declaration — hoisted
+sayHello(); // works (declaration is hoisted)
+function sayHello() {
+  console.log("Hello from declaration");
+}
+
+// Function expression — not hoisted
+try {
+  greet(); // ReferenceError or TypeError depending on var/let/const
+} catch(e) {
+  console.error("Calling greet before assignment fails:", e.message);
+}
+const greet = function() { console.log("Hello from expression"); };</code></pre>
+          </div>
+
+          <div class="controls">
+            <button class="btn" onclick="runHoistingDecl()">Run Declaration Demo</button>
+            <button class="btn" onclick="runHoistingExpr()">Run Expression Demo</button>
+            <button class="btn" onclick="toggleSpeaker('s2')">Toggle Speaker Notes</button>
+          </div>
+
+          <div style="margin-top:10px">
+            <div class="small">Output:</div>
+            <div id="outHoist" class="output">— run the examples to see results —</div>
+          </div>
+
+          <div id="s2" class="speaker">
+            <strong>Speaker notes — Hoisting</strong>
+            <p>Explain compilation vs runtime, and emphasize that function declarations are hoisted while function expressions (especially when using const/let) are not initialized before assignment and will throw if called early.</p>
+          </div>
+
+          <hr style="border:none;border-top:1px solid rgba(255,255,255,0.04);margin:18px 0">
+
+          <h3>Interactive hoisting demo (safe)</h3>
+          <p class="small">Click the buttons to run small snippets inside a safe sandbox (via <code>eval</code> inside a try/catch). The demo displays what would happen when a call is placed before the declaration.</p>
+          <div class="controls" style="margin-bottom:10px">
+            <button class="btn" onclick="hoistDemo('decl')">Demo: declaration (call before def)</button>
+            <button class="btn" onclick="hoistDemo('expr')">Demo: expression (call before assignment)</button>
+          </div>
+          <div id="outHoistDemo" class="output">— nothing yet —</div>
+
+        </section>
+
+        <section style="margin-top:20px">
+          <h2>3 — Closure vs Hoisting: Quick Comparison</h2>
+          <ul class="list small">
+            <li><strong>Closure:</strong> runtime concept — functions retain access to lexical scope variables even after the outer function finishes.</li>
+            <li><strong>Hoisting:</strong> compile-time behavior — declarations are moved to top of their scope so they can be referenced earlier.</li>
+            <li><strong>Use closures</strong> for encapsulation and private state. <strong>Use hoisting</strong> carefully — it can help organization but may be confusing for readers.</li>
+          </ul>
+
+          <div style="margin-top:12px" class="note">
+            <strong>Tip:</strong> Prefer readable order and explicit exports. Use closures intentionally (e.g., factories, modules). Avoid relying on hoisting to hide confusing ordering.
+          </div>
+
+          <div style="margin-top:12px" class="small">Want slides or a downloadable .pptx of this tutorial? Use the download link in the footer or ask me to generate a .pptx.</div>
+        </section>
+      </main>
+
+      <!-- Right column: quick reference / controls -->
+      <aside class="card">
+        <h3 style="margin-top:0">Quick Reference</h3>
+
+        <div style="margin-top:8px">
+          <div class="small"><strong>Closure</strong> — function + captured variables (lexical scope)</div>
+          <div style="margin-top:6px" class="note">Use: private state, factories, callbacks that remember data.</div>
+        </div>
+
+        <div style="margin-top:12px">
+          <div class="small"><strong>Hoisting</strong> — declarations moved to top during compilation</div>
+          <div style="margin-top:6px" class="note">Function declarations hoisted. Function expressions (const/let) are not initialized before assignment.</div>
+        </div>
+
+        <div style="margin-top:12px">
+          <h4 style="margin:8px 0 6px 0">Example snippets</h4>
+          <pre style="font-size:0.82rem;line-height:1.1"><code>const f = outer(); // closure
+sayHello(); // declaration hoisted
+greet(); // expression -> error if before assignment</code></pre>
+        </div>
+
+        <div style="margin-top:12px">
+          <button class="btn" onclick="copyAll()">Copy Page Examples</button>
+          <button class="btn" onclick="toggleAllSpeakers()">Toggle All Speaker Notes</button>
+        </div>
+
+        <div style="margin-top:16px">
+          <h4>Speaker notes</h4>
+          <p class="small">Each demo has a speaker notes toggle. Use them while recording lectures or preparing slides — they contain short talking points for each example.</p>
+        </div>
+      </aside>
+    </div>
+
+    <footer>
+      <div>Made for your JavaScript lecture — open-source, single-file tutorial.</div>
+      <div style="margin-top:6px">Tip: Hit the demo buttons to see live results. To get a downloadable .pptx, ask me and I'll create it from the slides & notes.</div>
+    </footer>
+  </div>
+
+  <script>
+    // Utilities
+    function copyToClipboard(text){
+      navigator.clipboard?.writeText(text).then(()=>alert('Copied to clipboard'), ()=>alert('Copy failed'));
+    }
+    function copyCode(id){
+      const el = document.getElementById(id);
+      if(!el) return;
+      copyToClipboard(el.innerText);
+    }
+    function copyAll(){
+      const codeBlocks = Array.from(document.querySelectorAll('pre code')).map(c=>c.innerText).join('\\n\\n// ----\\n\\n');
+      copyToClipboard(codeBlocks);
+    }
+
+    // Run closure simple example
+    function runClosure(){
+      const out = document.getElementById('outClosure');
+      try{
+        function outer() {
+          let outerVar = "I'm outside!";
+          function inner() { return outerVar; }
+          return inner;
+        }
+        const f = outer();
+        const res = f();
+        out.textContent = 'Result: ' + res;
+      } catch(e){
+        out.textContent = 'Error: ' + e.message;
+      }
+    }
+
+    function runGreetingClosures(){
+      const out = document.getElementById('outClosure');
+      try{
+        function greet(name) {
+          let greeting = "Hello, " + name + "!";
+          return function sayHello() { return greeting; };
+        }
+        const gj = greet('John');
+        const ga = greet('Alice');
+        out.textContent = 'greet("John") -> ' + gj() + '\\n' + 'greet("Alice") -> ' + ga();
+      } catch(e){
+        out.textContent = 'Error: ' + e.message;
+      }
+    }
+
+    // Counter demo
+    function runCounter(){
+      const out = document.getElementById('outCounter');
+      try{
+        function makeCounter() {
+          let count = 0;
+          return {
+            inc: function() { count += 1; return count; },
+            dec: function() { count -= 1; return count; },
+            value: function() { return count; }
+          };
+        }
+        const c = makeCounter();
+        const results = [c.inc(), c.inc(), c.value()];
+        out.textContent = 'Results: ' + results.join(', ');
+      } catch(e){
+        out.textContent = 'Error: ' + e.message;
+      }
+    }
+
+    // Hoisting demos
+    function runHoistingDecl(){
+      const out = document.getElementById('outHoist');
+      try{
+        // demonstrate that declaration can be called before its appearance in code
+        // we simulate "call before def" by eval-ing code where call comes first.
+        const code = "sayHello(); function sayHello(){ return 'Hello from declaration'; }";
+        const res = eval("(function(){ " + code + " })()");
+        out.textContent = 'Declaration eval ran successfully — open console for full trace (return is not captured from eval call when called directly).';
+      }catch(e){ out.textContent = 'Error: ' + e.message; }
+    }
+
+    function runHoistingExpr(){
+      const out = document.getElementById('outHoist');
+      try{
+        // Function expression called before it's assigned
+        const code = "try { greet(); } catch(e) { return 'Error when calling greet before assignment: ' + e.name + ' - ' + e.message } const greet = function(){ return 'Hello from expression' };";
+        const res = (function(){ try{
+            // We must eval as a self-invoking function so return works
+            return eval("(function(){ " + code + " })()");
+        }catch(e){ return 'Eval error: ' + e.message }})();
+        out.textContent = res;
+      }catch(e){ out.textContent = 'Error: ' + e.message; }
+    }
+
+    // Safe hoist demo
+    function hoistDemo(kind){
+      const out = document.getElementById('outHoistDemo');
+      if(kind === 'decl'){
+        try{
+          const code = "sayHello(); function sayHello(){ return 'Hello (declaration)'; }";
+          // eval inside a function to isolate scope; capture errors
+          const res = (function(){ return eval("(function(){ " + code + " })()"); })();
+          out.textContent = "Declaration demo: ran without error. (Function declarations inside eval are hoisted within the eval scope.)";
+        }catch(e){ out.textContent = "Declaration demo error: " + e.message; }
+      } else {
+        try {
+          const code = "try { greet(); return 'No error when calling greet before assignment (unexpected)'; } catch(e) { return 'Expression demo: error calling greet before assignment -> ' + e.name + ': ' + e.message; } const greet = function(){ return 'hello expression' }";
+          const res = (function(){ return eval("(function(){ " + code + " })()"); })();
+          out.textContent = res;
+        } catch(e) { out.textContent = 'Expression demo error: ' + e.message; }
+      }
+    }
+
+    // Additional hoisting helpers used by buttons
+    function toggleSpeaker(id){
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.classList.toggle('show');
+    }
+    function toggleAllSpeakers(){
+      document.querySelectorAll('.speaker').forEach(s=>s.classList.toggle('show'));
+    }
+
+    // Expose to window for inline buttons
+    window.runClosure = runClosure;
+    window.runGreetingClosures = runGreetingClosures;
+    window.runCounter = runCounter;
+    window.runHoistingDecl = runHoistingDecl;
+    window.runHoistingExpr = runHoistingExpr;
+    window.hoistDemo = hoistDemo;
+    window.copyCode = copyCode;
+    window.copyAll = copyAll;
+    window.toggleSpeaker = toggleSpeaker;
+    window.toggleAllSpeakers = toggleAllSpeakers;
+  </script>
+</body>
+</html>
