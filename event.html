@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>JavaScript Events — Interactive Tutorial</title>
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --accent:#7dd3fc; --muted:#94a3b8;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color-scheme: dark;
+    }
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#071024 0%, #08102a 100%); color:#e6eef6}
+    .wrap{max-width:980px;margin:28px auto;padding:20px}
+    header{display:flex;gap:16px;align-items:center}
+    h1{font-size:1.6rem;margin:0}
+    .subtitle{color:var(--muted);font-size:0.95rem}
+    .grid{display:grid;grid-template-columns:1fr 320px;gap:18px;margin-top:18px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:18px;border-radius:12px;box-shadow:0 6px 20px rgba(2,6,23,0.6)}
+    pre{background:rgba(0,0,0,0.25);padding:12px;border-radius:8px;overflow:auto;color:#dff3ff;font-size:0.9rem}
+    code{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace; font-size:0.9rem}
+    .small{font-size:0.9rem;color:var(--muted)}
+    .btn{background:transparent;border:1px solid rgba(125,211,252,0.14); color:var(--accent); padding:8px 10px;border-radius:8px;cursor:pointer}
+    .controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .output{background:#021226;padding:12px;border-radius:8px;min-height:56px;color:#d6f6ff;white-space:pre-wrap}
+    .note{background:linear-gradient(90deg, rgba(125,211,252,0.06), rgba(255,255,255,0.02)); border-left:4px solid rgba(125,211,252,0.14); padding:10px;border-radius:6px;color:var(--muted)}
+    .speaker{margin-top:12px;padding:12px;background:rgba(255,255,255,0.02);border-radius:8px;color:var(--muted);display:none}
+    .show{display:block}
+    .kbd{background:#071827;padding:4px 8px;border-radius:6px;font-size:0.85rem;border:1px solid rgba(255,255,255,0.03)}
+    .copy{float:right;font-size:0.8rem;opacity:0.85}
+    footer{color:var(--muted);font-size:0.85rem;margin-top:14px;text-align:center}
+    @media (max-width:980px){
+      .grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Events in JavaScript</h1>
+        <div class="subtitle">Interactive tutorial — click, mouseover, keydown, change (examples + notes)</div>
+      </div>
+      <div style="margin-left:auto;text-align:right">
+        <div class="small">Author: Dr. Khaled Alrfou</div>
+        <div class="small">Topic: JavaScript events & handlers</div>
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- Main -->
+      <main class="card">
+        <section>
+          <h2 style="margin-top:0">What are Events?</h2>
+          <p class="small">Events are actions or occurrences that happen in the browser (user interactions, page load, mouse movement, keyboard input, etc.). Event handlers let your JavaScript respond to those events and make pages interactive.</p>
+
+          <div class="note" style="margin-top:10px">
+            <strong>Common events:</strong> <span class="small">click, mouseover, keydown, change, submit, input, load, resize</span>
+          </div>
+        </section>
+
+        <section style="margin-top:16px">
+          <h3>1 — Click event</h3>
+          <p class="small">Triggered when a user clicks an element such as a button. Use `onclick` property or `addEventListener('click', ...)`.</p>
+
+          <div style="position:relative">
+            <button class="copy" onclick="copyCode('codeClick')">Copy</button>
+            <pre id="codeClick"><code>// HTML:
+// <button id="btnClick">Click me</button>
+// <p id="clickOutput"></p>
+
+const btn = document.getElementById('btnClick');
+const out = document.getElementById('clickOutput');
+
+btn.onclick = function() {
+  out.textContent = 'Button clicked!';
+};</code></pre>
+          </div>
+
+          <div class="controls">
+            <button class="btn" onclick="simulateClick()">Run Click Demo</button>
+            <button class="btn" onclick="toggleSpeaker('sClick')">Toggle Speaker Notes</button>
+          </div>
+
+          <div style="margin-top:8px">
+            <div class="small">Interactive demo:</div>
+            <div style="display:flex;gap:8px;align-items:center;margin-top:6px">
+              <button id="btnClick" class="btn" style="border-color:rgba(125,211,252,0.25)">Click me</button>
+              <div id="clickOutput" class="output">— click the button —</div>
+            </div>
+          </div>
+
+          <div id="sClick" class="speaker">
+            <strong>Speaker notes — Click</strong>
+            <p>Explain difference between `element.onclick = ...` and `element.addEventListener('click', ...)` (multiple handlers and removal). Demonstrate simple UI feedback on click.</p>
+          </div>
+        </section>
+
+        <hr style="border:none;border-top:1px solid rgba(255,255,255,0.04);margin:18px 0">
+
+        <section>
+          <h3>2 — Mouseover / Mouseenter</h3>
+          <p class="small">`mouseover` fires when the mouse enters an element or its children. `mouseenter` is similar but does not bubble to children.</p>
+
+          <div style="position:relative">
+            <button class="copy" onclick="copyCode('codeHover')">Copy</button>
+            <pre id="codeHover"><code>// HTML:
+// <div id="hoverBox" style="width:200px;height:80px;border:1px solid #ccc;">Hover me</div>
+// <p id="hoverOutput"></p>
+
+const box = document.getElementById('hoverBox');
+const hoverOut = document.getElementById('hoverOutput');
+
+box.onmouseover = function() {
+  hoverOut.textContent = 'Mouse over the div!';
+};
+box.onmouseout = function() {
+  hoverOut.textContent = 'Mouse left the div.';
+};</code></pre>
+          </div>
+
+          <div class="controls">
+            <button class="btn" onclick="setupHover()">Run Hover Demo</button>
+            <button class="btn" onclick="toggleSpeaker('sHover')">Toggle Speaker Notes</button>
+          </div>
+
+          <div style="margin-top:8px">
+            <div style="display:flex;gap:12px;align-items:center">
+              <div id="hoverBox" style="width:220px;height:80px;border-radius:8px;padding:12px;background:linear-gradient(180deg,#07203a,#042235);cursor:pointer">Hover over me</div>
+              <div id="hoverOutput" class="output">— move the mouse over the box —</div>
+            </div>
+          </div>
+
+          <div id="sHover" class="speaker">
+            <strong>Speaker notes — Mouseover</strong>
+            <p>Demonstrate how `mouseover` fires when entering children as well; `mouseenter` doesn't bubble. Discuss throttling for frequent mouse events.</p>
+          </div>
+        </section>
+
+        <hr style="border:none;border-top:1px solid rgba(255,255,255,0.04);margin:18px 0">
+
+        <section>
+          <h3>3 — Keydown</h3>
+          <p class="small">Fires when a key is pressed down. Use the `event` object to get `event.key` or `event.code`.</p>
+
+          <div style="position:relative">
+            <button class="copy" onclick="copyCode('codeKey')">Copy</button>
+            <pre id="codeKey"><code>// HTML:
+// <input id="textInput" placeholder="Type here">
+// <p id="keyOutput"></p>
+
+const input = document.getElementById('textInput');
+const keyOut = document.getElementById('keyOutput');
+
+input.onkeydown = function(e) {
+  keyOut.textContent = 'Key pressed: ' + e.key;
+};</code></pre>
+          </div>
+
+          <div class="controls">
+            <button class="btn" onclick="setupKey()">Run Keydown Demo</button>
+            <button class="btn" onclick="toggleSpeaker('sKey')">Toggle Speaker Notes</button>
+          </div>
+
+          <div style="margin-top:8px">
+            <div style="display:flex;gap:12px;align-items:center">
+              <input id="textInput" placeholder="Type here" style="padding:8px;border-radius:6px;border:1px solid rgba(125,211,252,0.06)">
+              <div id="keyOutput" class="output">— pressed keys will show here —</div>
+            </div>
+          </div>
+
+          <div id="sKey" class="speaker">
+            <strong>Speaker notes — Keydown</strong>
+            <p>Mention differences between keydown, keypress (deprecated/less reliable), and keyup. Show how to prevent default behavior (e.g., Enter) with <code>e.preventDefault()</code>.</p>
+          </div>
+        </section>
+
+        <hr style="border:none;border-top:1px solid rgba(255,255,255,0.04);margin:18px 0">
+
+        <section>
+          <h3>4 — Change / Input</h3>
+          <p class="small">`change` fires when an input loses focus and its value changed. `input` fires on every modification (useful for live updates).</p>
+
+          <div style="position:relative">
+            <button class="copy" onclick="copyCode('codeChange')">Copy</button>
+            <pre id="codeChange"><code>// HTML:
+// <input id="changeInput" placeholder="Type then blur">
+// <p id="changeOutput"></p>
+
+const chInput = document.getElementById('changeInput');
+const changeOut = document.getElementById('changeOutput');
+
+chInput.onchange = function() {
+  changeOut.textContent = 'Value changed to: ' + chInput.value;
+};
+chInput.oninput = function() {
+  changeOut.textContent = 'Live value: ' + chInput.value;
+};</code></pre>
+          </div>
+
+          <div class="controls">
+            <button class="btn" onclick="setupChange()">Run Change Demo</button>
+            <button class="btn" onclick="toggleSpeaker('sChange')">Toggle Speaker Notes</button>
+          </div>
+
+          <div style="margin-top:8px">
+            <div style="display:flex;gap:12px;align-items:center">
+              <input id="changeInput" placeholder="Type then blur" style="padding:8px;border-radius:6px;border:1px solid rgba(125,211,252,0.06)">
+              <div id="changeOutput" class="output">— change or input events will appear —</div>
+            </div>
+          </div>
+
+          <div id="sChange" class="speaker">
+            <strong>Speaker notes — Change / Input</strong>
+            <p>Explain difference: use <code>input</code> for live validation or previews, and <code>change</code> when you want final edited value after blur or selection change.</p>
+          </div>
+        </section>
+
+        <hr style="border:none;border-top:1px solid rgba(255,255,255,0.04);margin:18px 0">
+
+        <section>
+          <h3>Best practices</h3>
+          <ul class="small">
+            <li>Prefer <code>addEventListener</code> to attach multiple handlers and for better control.</li>
+            <li>Remove listeners when not needed to prevent leaks (<code>removeEventListener</code>).</li>
+            <li>Debounce or throttle high-frequency events (scroll, mousemove).</li>
+            <li>Use event delegation when many child elements need similar handling.</li>
+          </ul>
+        </section>
+
+      </main>
+
+      <!-- Aside -->
+      <aside class="card">
+        <h3 style="margin-top:0">Quick Reference</h3>
+        <div style="margin-top:8px" class="small">
+          <strong>Attach handlers:</strong>
+          <pre style="font-size:0.82rem"><code>el.onclick = fn;
+el.addEventListener('click', fn);
+el.removeEventListener('click', fn);</code></pre>
+        </div>
+
+        <div style="margin-top:12px">
+          <h4 style="margin:8px 0 6px 0">Demo controls</h4>
+          <div class="controls" style="flex-direction:column">
+            <button class="btn" onclick="copyAll()">Copy all snippets</button>
+            <button class="btn" onclick="toggleAllSpeakers()">Toggle All Speaker Notes</button>
+          </div>
+        </div>
+
+        <div style="margin-top:14px" class="note">
+          <strong>Tip:</strong> To teach, show both the code and the live result. Encourage students to open DevTools and inspect the `event` object.
+        </div>
+      </aside>
+    </div>
+
+    <footer>
+      <div>Interactive tutorial for teaching JavaScript events — single-file HTML.</div>
+    </footer>
+  </div>
+
+  <script>
+    // copy utilities
+    function copyToClipboard(text){
+      navigator.clipboard?.writeText(text).then(()=>alert('Copied to clipboard'), ()=>alert('Copy failed'));
+    }
+    function copyCode(id){
+      const el = document.getElementById(id);
+      if(!el) return;
+      copyToClipboard(el.innerText);
+    }
+    function copyAll(){
+      const codeBlocks = Array.from(document.querySelectorAll('pre code')).map(c=>c.innerText).join('\\n\\n// ----\\n\\n');
+      copyToClipboard(codeBlocks);
+    }
+
+    // Click demo wiring
+    (function attachClick(){
+      const btn = document.getElementById('btnClick');
+      const out = document.getElementById('clickOutput');
+      btn.onclick = function() {
+        out.textContent = 'Button clicked! (via onclick)';
+      };
+    })();
+
+    function simulateClick(){
+      const out = document.getElementById('clickOutput');
+      out.textContent = 'Simulated click: Button clicked!';
+    }
+
+    // Hover wiring
+    function setupHover(){
+      const box = document.getElementById('hoverBox');
+      const hoverOut = document.getElementById('hoverOutput');
+      box.onmouseover = function() {
+        hoverOut.textContent = 'Mouse over the div!';
+      };
+      box.onmouseout = function() {
+        hoverOut.textContent = 'Mouse left the div.';
+      };
+      hoverOut.textContent = 'Handlers attached — move your mouse over the box.';
+    }
+
+    // Keydown wiring
+    function setupKey(){
+      const input = document.getElementById('textInput');
+      const keyOut = document.getElementById('keyOutput');
+      input.onkeydown = function(e) {
+        keyOut.textContent = 'Key pressed: ' + e.key;
+      };
+      keyOut.textContent = 'Handler attached — focus the input and press keys.';
+      input.focus();
+    }
+
+    // Change / input wiring
+    function setupChange(){
+      const chInput = document.getElementById('changeInput');
+      const changeOut = document.getElementById('changeOutput');
+      chInput.onchange = function() {
+        changeOut.textContent = 'Value changed to: ' + chInput.value;
+      };
+      chInput.oninput = function() {
+        changeOut.textContent = 'Live value: ' + chInput.value;
+      };
+      changeOut.textContent = 'Handler attached — type and blur the input to trigger change.';
+      chInput.focus();
+    }
+
+    // Speaker toggles
+    function toggleSpeaker(id){
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.classList.toggle('show');
+    }
+    function toggleAllSpeakers(){
+      document.querySelectorAll('.speaker').forEach(s=>s.classList.toggle('show'));
+    }
+
+    // Expose some functions
+    window.copyCode = copyCode;
+    window.copyAll = copyAll;
+    window.toggleSpeaker = toggleSpeaker;
+    window.toggleAllSpeakers = toggleAllSpeakers;
+    window.setupHover = setupHover;
+    window.setupKey = setupKey;
+    window.setupChange = setupChange;
+    window.simulateClick = simulateClick;
+  </script>
+</body>
+</html>
